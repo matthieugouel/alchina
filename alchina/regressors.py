@@ -75,3 +75,15 @@ class LinearRegressor(AbstractRegressor):
         """Use normal equation to compute the parameters."""
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
         self.parameters = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(y)
+
+
+class LogisticRegressor(AbstractRegressor):
+    """Logistic regressor."""
+
+    def sigmoid(self, z):
+        """Logistic function."""
+        return 1 / (1 + np.exp(-z))
+
+    def hypothesis(self, X):
+        """Logistic hypothesis."""
+        return self.sigmoid(np.dot(X, self.parameters))
