@@ -25,7 +25,9 @@ y = df["target"]
 y = y.values.reshape(y.shape[0], 1)
 
 # Train the model
-lr = LinearRegressor(learning_rate=0.05, iterations=1000, standardize=True)
+lr = LinearRegressor(
+    learning_rate=0.05, iterations=1000, history=True, standardize=True
+)
 lr.fit(X, y)
 
 # Plot the results

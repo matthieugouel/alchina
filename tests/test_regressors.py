@@ -42,6 +42,40 @@ def test_linear_regressor_normal():
     assert lr.score(X, y) == 1
 
 
+def test_linear_regressor_history_enabled():
+    """Test of `LinearRegressor` history when enabled."""
+
+    lr = LinearRegressor(
+        learning_rate=0.1, iterations=1, history=True, standardize=False
+    )
+
+    assert lr.history == []
+
+    X = np.array([[1]])
+    y = np.array([[1]])
+
+    lr.fit(X, y)
+
+    assert lr.history is not None
+
+
+def test_linear_regressor_history_disabled():
+    """Test of `LinearRegressor` history when disabled."""
+
+    lr = LinearRegressor(
+        learning_rate=0.1, iterations=1, history=False, standardize=False
+    )
+
+    assert lr.history is None
+
+    X = np.array([[1]])
+    y = np.array([[1]])
+
+    lr.fit(X, y)
+
+    assert lr.history is None
+
+
 def test_logistic_regressor():
     """Test of `LogisticRegressor` class."""
     lr = LogisticRegressor(learning_rate=0.1, iterations=1, standardize=False)
@@ -64,3 +98,37 @@ def test_logistic_regressor_standardized():
     lr.fit(X, y)
 
     assert lr.score(X, y) == 1
+
+
+def test_logistic_regressor_history_enabled():
+    """Test of `LogisticRegressor` history when enabled."""
+
+    lr = LogisticRegressor(
+        learning_rate=0.1, iterations=1, history=True, standardize=False
+    )
+
+    assert lr.history == []
+
+    X = np.array([[1]])
+    y = np.array([[1]])
+
+    lr.fit(X, y)
+
+    assert lr.history is not None
+
+
+def test_logistic_regressor_history_disabled():
+    """Test of `LogisticRegressor` history when disabled."""
+
+    lr = LogisticRegressor(
+        learning_rate=0.1, iterations=1, history=False, standardize=False
+    )
+
+    assert lr.history is None
+
+    X = np.array([[1]])
+    y = np.array([[1]])
+
+    lr.fit(X, y)
+
+    assert lr.history is None
