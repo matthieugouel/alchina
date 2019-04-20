@@ -29,11 +29,10 @@ class AbstractRegressor(ABC):
         """Regression hypothesis."""
         pass  # pragma: no cover
 
-    def cost(self, X, y):
-        """Calculate the cost."""
-        return (1 / 2 * y.shape[0]) * (self.hypothesis(X) - y).T.dot(
-            self.hypothesis(X) - y
-        ).flat[0]
+    @abstractmethod
+    def cost_function(self, X, y):
+        """Cost function."""
+        pass  # pragma: no cover
 
     def gradient_descent(self, X, y):
         """Batch Gradient Descent algorithm."""
@@ -42,7 +41,7 @@ class AbstractRegressor(ABC):
                 self.learning_rate / y.shape[0]
             ) * X.T.dot(self.hypothesis(X) - y)
 
-            self.history.append(self.cost(X, y))
+            self.history.append(self.cost_function(X, y))
 
     def fit(self, X, y):
         """Fit the model."""
@@ -71,6 +70,12 @@ class LinearRegressor(AbstractRegressor):
         """Linear hypothesis."""
         return np.dot(X, self.parameters)
 
+    def cost_function(self, X, y):
+        """Cost function."""
+        return (1 / 2 * y.shape[0]) * (self.hypothesis(X) - y).T.dot(
+            self.hypothesis(X) - y
+        ).flat[0]
+
     def normal(self, X, y):
         """Use normal equation to compute the parameters."""
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
@@ -87,3 +92,10 @@ class LogisticRegressor(AbstractRegressor):
     def hypothesis(self, X):
         """Logistic hypothesis."""
         return self.sigmoid(np.dot(X, self.parameters))
+
+    def cost_function(self, X, y):
+        """Cost function."""
+        return (1 / y.shape[0]) * (
+            -y.T.dot(np.log(self.hypothesis(X)))
+            - (1 - y).T.dot(np.log(1 - self.hypothesis(X)))
+        ).flat[0]
