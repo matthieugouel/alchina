@@ -27,7 +27,7 @@ standardize = Standardization()
 X = standardize(X)
 
 # Perform the logistic regression
-lr = LogisticRegressor(iterations=10000)
+lr = LogisticRegressor(iterations=10000, history=True)
 lr.fit(X, y)
 
 # Plot the results
