@@ -5,7 +5,6 @@ import pandas as pd
 from alchina.diagnosis import split_dataset
 from alchina.regressors import LinearRegressor
 
-
 from sklearn import datasets
 from sklearn.linear_model import LinearRegression
 from timeit import default_timer as timer

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from alchina.optimizers import MBGD
 from alchina.regressors import LinearRegressor
 
 from sklearn import datasets
@@ -26,7 +27,7 @@ y = y.values.reshape(y.shape[0], 1)
 
 # Train the model
 lr = LinearRegressor(
-    learning_rate=0.05, iterations=1000, history=True, standardize=True
+    optimizer=MBGD(learning_rate=0.05, iterations=70), history=True, standardize=True
 )
 lr.fit(X, y)
 

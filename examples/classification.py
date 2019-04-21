@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from alchina.preprocessors import Standardization
+from alchina.optimizers import SGD
 from alchina.classifiers import LinearClassifier
 
 from sklearn import datasets
@@ -26,9 +27,9 @@ y = y.values.reshape(X.shape[0], 1)
 standardize = Standardization()
 X = standardize(X)
 
-# Perform the logistic regression
-lr = LinearClassifier(iterations=10000, history=True)
-lr.fit(X, y)
+# Train the model
+lc = LinearClassifier(optimizer=SGD(iterations=15, history=True), standardize=True)
+lc.fit(X, y)
 
 # Plot the results
 figure, (a0, a1) = plt.subplots(
@@ -51,14 +52,14 @@ a0.set(
 )
 
 x_boundary = np.array([np.min(X[:, 0]) + 1, np.max(X[:, 0]) - 3])
-y_boundary = (-1 / lr.parameters[2]) * (
-    lr.parameters[1] * x_boundary + lr.parameters[0]
+y_boundary = (-1 / lc.parameters[2]) * (
+    lc.parameters[1] * x_boundary + lc.parameters[0]
 )
 
 a0.plot(x_boundary, y_boundary, label="Decision Boundary")
 a0.legend(loc="upper right")
 
-a1.plot(range(len(lr.history)), lr.history)
+a1.plot(range(len(lc.history)), lc.history)
 a1.set(xlabel="Number of iterations", ylabel="Training error objective")
 
 plt.show()
