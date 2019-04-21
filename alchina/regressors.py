@@ -15,10 +15,10 @@ class AbstractRegressor(ABC):
     def __init__(self, *args, optimizer=None, standardize: bool = True, **kwargs):
         self.standardize = Standardization() if standardize else None
         self.optimizer = optimizer if optimizer else GradientDescent(*args, **kwargs)
-        self.optimizer.build(self.cost_function, self.gradient)
+        self.optimizer.build(self.cost, self.gradient)
 
     @abstractmethod
-    def cost_function(self, X, y, theta):
+    def cost(self, X, y, theta):
         """Cost function."""
         pass  # pragma: no cover
 
@@ -61,15 +61,15 @@ class LinearRegressor(AbstractRegressor):
         """Linear hypothesis."""
         return np.dot(X, theta)
 
-    def cost_function(self, X, y, theta):
+    def cost(self, X, y, theta):
         """Cost function."""
-        return (1 / 2 * y.shape[0]) * (self.hypothesis(X, theta) - y).T.dot(
+        return (1 / 2) * (self.hypothesis(X, theta) - y).T.dot(
             self.hypothesis(X, theta) - y
         ).flat[0]
 
     def gradient(self, X, y, theta):
         """Gradient."""
-        return (1 / y.shape[0]) * X.T.dot(self.hypothesis(X, theta) - y)
+        return X.T.dot(self.hypothesis(X, theta) - y)
 
     def normal(self, X, y):
         """Use normal equation to compute the parameters."""
@@ -84,15 +84,15 @@ class RidgeRegressor(LinearRegressor):
         super().__init__(*args, **kwargs)
         self.regularization = regularization
 
-    def cost_function(self, X, y, theta):
+    def cost(self, X, y, theta):
         """Regularized cost function."""
-        return (1 / 2 * y.shape[0]) * (self.hypothesis(X, theta) - y).T.dot(
+        return (1 / 2) * (self.hypothesis(X, theta) - y).T.dot(
             self.hypothesis(X, theta) - y
         ).flat[0] + self.regularization * np.sum(np.square(theta[:, 1:]), axis=0)
 
     def gradient(self, X, y, theta):
         """Regularized gradient."""
-        return (1 / y.shape[0]) * (
+        return (
             X.T.dot(self.hypothesis(X, theta) - y)
             + self.regularization * np.c_[np.zeros((theta.shape[0], 1)), theta[:, 1:]]
         )

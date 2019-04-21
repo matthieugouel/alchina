@@ -5,7 +5,7 @@ import numpy as np
 from alchina.classifiers import LinearClassifier, RidgeClassifier
 
 
-# -- Linear classifier --
+# --- Linear classifier ---
 
 
 def test_linear_classifier():
@@ -33,7 +33,7 @@ def test_linear_classifier_standardized():
 
 
 def test_linear_classifier_history_enabled():
-    """Test of `LinearClassifier` history when enabled."""
+    """Test of `LinearClassifier` when history enabled."""
 
     lr = LinearClassifier(
         learning_rate=0.1, iterations=1, history=True, standardize=False
@@ -50,7 +50,7 @@ def test_linear_classifier_history_enabled():
 
 
 def test_linear_classifier_history_disabled():
-    """Test of `LinearClassifier` history when disabled."""
+    """Test of `LinearClassifier` when history disabled."""
 
     lr = LinearClassifier(
         learning_rate=0.1, iterations=1, history=False, standardize=False
@@ -66,7 +66,7 @@ def test_linear_classifier_history_disabled():
     assert lr.history is None
 
 
-# -- Ridge classifier --
+# --- Ridge classifier ---
 
 
 def test_ridge_classifier():
@@ -94,7 +94,7 @@ def test_ridge_classifier_standardized():
 
 
 def test_ridge_classifier_history_enabled():
-    """Test of `RidgeClassifier` history when enabled."""
+    """Test of `RidgeClassifier` when history enabled."""
 
     lr = RidgeClassifier(
         learning_rate=0.1, iterations=1, history=True, standardize=False
@@ -111,7 +111,7 @@ def test_ridge_classifier_history_enabled():
 
 
 def test_ridge_classifier_history_disabled():
-    """Test of `RidgeClassifier` history when disabled."""
+    """Test of `RidgeClassifier` when history disabled."""
 
     lr = RidgeClassifier(
         learning_rate=0.1, iterations=1, history=False, standardize=False
