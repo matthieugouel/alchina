@@ -9,10 +9,10 @@ from alchina.regressors import LinearRegressor
 from sklearn import datasets
 
 
-# Load the boston toy dataset
+# Load the Boston house prices dataset
 houses = datasets.load_boston()
 
-# Create the features data frame
+# Create the input features and target data frame
 df = pd.DataFrame(houses.data, columns=houses.feature_names)
 df["target"] = pd.Series(houses.target)
 

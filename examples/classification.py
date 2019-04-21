@@ -1,18 +1,18 @@
-"""Example of logistic regression."""
+"""Example of linear classification (logistic regression)."""
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 from alchina.preprocessors import Standardization
-from alchina.regressors import LogisticRegressor
+from alchina.classifiers import LinearClassifier
 
 from sklearn import datasets
 
-# Load the dataset
+# Load the Wisconsin breast cancer dataset
 cancer = datasets.load_breast_cancer()
 
-# Select the input feature and target
+# Create the input features and target data frame
 df = pd.DataFrame(data=cancer["data"], columns=cancer["feature_names"])
 df["target"] = pd.Series(cancer.target)
 
@@ -27,7 +27,7 @@ standardize = Standardization()
 X = standardize(X)
 
 # Perform the logistic regression
-lr = LogisticRegressor(iterations=10000, history=True)
+lr = LinearClassifier(iterations=10000, history=True)
 lr.fit(X, y)
 
 # Plot the results
@@ -38,7 +38,7 @@ figure, (a0, a1) = plt.subplots(
     figsize=(16, 9),
     gridspec_kw={"width_ratios": [3, 1]},
 )
-figure.suptitle("Logistic Regression on breast cancer Wisconsin dataset", fontsize=16)
+figure.suptitle("Logistic Regression on Wisconsin breast cancer dataset", fontsize=16)
 
 M = X[df["target"] == 0]
 B = X[df["target"] == 1]

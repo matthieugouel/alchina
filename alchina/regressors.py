@@ -77,24 +77,31 @@ class LinearRegressor(AbstractRegressor):
         self.optimizer.parameters = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(y)
 
 
-class LogisticRegressor(AbstractRegressor):
-    """Logistic regressor."""
+class RidgeRegressor(LinearRegressor):
+    """Ridge regressor."""
 
-    def sigmoid(self, z):
-        """Logistic function."""
-        return 1 / (1 + np.exp(-z))
-
-    def hypothesis(self, X, theta):
-        """Logistic hypothesis."""
-        return self.sigmoid(np.dot(X, theta))
+    def __init__(self, *args, regularization: float = 1, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.regularization = regularization
 
     def cost_function(self, X, y, theta):
-        """Cost function."""
-        return (1 / y.shape[0]) * (
-            -y.T.dot(np.log(self.hypothesis(X, theta)))
-            - (1 - y).T.dot(np.log(1 - self.hypothesis(X, theta)))
-        ).flat[0]
+        """Regularized cost function."""
+        return (1 / 2 * y.shape[0]) * (self.hypothesis(X, theta) - y).T.dot(
+            self.hypothesis(X, theta) - y
+        ).flat[0] + self.regularization * np.sum(np.square(theta[:, 1:]), axis=0)
 
     def gradient(self, X, y, theta):
-        """Gradient."""
-        return (1 / y.shape[0]) * X.T.dot(self.hypothesis(X, theta) - y)
+        """Regularized gradient."""
+        return (1 / y.shape[0]) * (
+            X.T.dot(self.hypothesis(X, theta) - y)
+            + self.regularization * np.c_[np.zeros((theta.shape[0], 1)), theta[:, 1:]]
+        )
+
+    def normal(self, X, y):
+        """Use normal equation regularized to compute the parameters."""
+        X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
+        L = np.identity(X.shape[0])
+        L[0, 0] = 0
+        self.optimizer.parameters = (
+            np.linalg.pinv(X.T.dot(X) + self.regularization * L).dot(X.T).dot(y)
+        )
