@@ -2,7 +2,10 @@
 
 import numpy as np
 
-from alchina.regressors import LinearRegressor, LogisticRegressor
+from alchina.regressors import LinearRegressor, RidgeRegressor
+
+
+# -- Linear regressor --
 
 
 def test_linear_regressor():
@@ -76,9 +79,12 @@ def test_linear_regressor_history_disabled():
     assert lr.history is None
 
 
-def test_logistic_regressor():
-    """Test of `LogisticRegressor` class."""
-    lr = LogisticRegressor(learning_rate=0.1, iterations=1, standardize=False)
+# -- Ridge regressor --
+
+
+def test_ridge_regressor():
+    """Test of `RidgeRegressor` class."""
+    lr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
 
     X = np.array([[1]])
     y = np.array([[1]])
@@ -88,9 +94,9 @@ def test_logistic_regressor():
     assert lr.score(X, y) == 1
 
 
-def test_logistic_regressor_standardized():
-    """Test of `LogisticRegressor` class with standardization."""
-    lr = LogisticRegressor(learning_rate=0.1, iterations=1, standardize=True)
+def test_ridge_regressor_standardized():
+    """Test of `RidgeRegressor` class with standardization."""
+    lr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=True)
 
     X = np.array([[1]])
     y = np.array([[1]])
@@ -100,10 +106,23 @@ def test_logistic_regressor_standardized():
     assert lr.score(X, y) == 1
 
 
-def test_logistic_regressor_history_enabled():
-    """Test of `LogisticRegressor` history when enabled."""
+def test_ridge_regressor_normal():
+    """Test of `normal` method of `RidgeRegressor` class."""
 
-    lr = LogisticRegressor(
+    lr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([[1]])
+    y = np.array([[1]])
+
+    lr.normal(X, y)
+
+    assert lr.score(X, y) == 1
+
+
+def test_ridge_regressor_history_enabled():
+    """Test of `RidgeRegressor` history when enabled."""
+
+    lr = RidgeRegressor(
         learning_rate=0.1, iterations=1, history=True, standardize=False
     )
 
@@ -117,10 +136,10 @@ def test_logistic_regressor_history_enabled():
     assert lr.history is not None
 
 
-def test_logistic_regressor_history_disabled():
-    """Test of `LogisticRegressor` history when disabled."""
+def test_ridge_regressor_history_disabled():
+    """Test of `RidgeRegressor` history when disabled."""
 
-    lr = LogisticRegressor(
+    lr = RidgeRegressor(
         learning_rate=0.1, iterations=1, history=False, standardize=False
     )
 
