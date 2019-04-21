@@ -5,7 +5,7 @@ import numpy as np
 from alchina.regressors import LinearRegressor, RidgeRegressor
 
 
-# -- Linear regressor --
+# --- Linear regressor ---
 
 
 def test_linear_regressor():
@@ -46,7 +46,7 @@ def test_linear_regressor_normal():
 
 
 def test_linear_regressor_history_enabled():
-    """Test of `LinearRegressor` history when enabled."""
+    """Test of `LinearRegressor` when history enabled."""
 
     lr = LinearRegressor(
         learning_rate=0.1, iterations=1, history=True, standardize=False
@@ -63,7 +63,7 @@ def test_linear_regressor_history_enabled():
 
 
 def test_linear_regressor_history_disabled():
-    """Test of `LinearRegressor` history when disabled."""
+    """Test of `LinearRegressor` when history disabled."""
 
     lr = LinearRegressor(
         learning_rate=0.1, iterations=1, history=False, standardize=False
@@ -79,7 +79,7 @@ def test_linear_regressor_history_disabled():
     assert lr.history is None
 
 
-# -- Ridge regressor --
+# --- Ridge regressor ---
 
 
 def test_ridge_regressor():
@@ -120,7 +120,7 @@ def test_ridge_regressor_normal():
 
 
 def test_ridge_regressor_history_enabled():
-    """Test of `RidgeRegressor` history when enabled."""
+    """Test of `RidgeRegressor` when history enabled."""
 
     lr = RidgeRegressor(
         learning_rate=0.1, iterations=1, history=True, standardize=False
@@ -137,7 +137,7 @@ def test_ridge_regressor_history_enabled():
 
 
 def test_ridge_regressor_history_disabled():
-    """Test of `RidgeRegressor` history when disabled."""
+    """Test of `RidgeRegressor` when history disabled."""
 
     lr = RidgeRegressor(
         learning_rate=0.1, iterations=1, history=False, standardize=False

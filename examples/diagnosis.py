@@ -1,4 +1,4 @@
-"""Example of Diagnosis."""
+"""Example of algorithm diagnosis."""
 
 import pandas as pd
 
@@ -11,14 +11,14 @@ from sklearn.linear_model import LinearRegression
 from timeit import default_timer as timer
 
 
-# Load the boston toy dataset
+# Load the Boston house prices dataset
 houses = datasets.load_boston()
 
-# Create the features data frame
+# Create the input features and target data frame
 df = pd.DataFrame(houses.data, columns=houses.feature_names)
 df["target"] = pd.Series(houses.target)
 
-# Select the input feature
+# Select the input features
 X = df[houses.feature_names].values
 
 # Select the target

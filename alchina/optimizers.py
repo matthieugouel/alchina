@@ -5,6 +5,8 @@ import numpy as np
 from abc import ABC, abstractmethod
 from typing import Optional
 
+from .utils import shuffle_dataset
+
 
 class AbstractOptimizer(ABC):
     """Abstract class for optimizers algorithms."""
@@ -42,9 +44,37 @@ class GradientDescent(AbstractOptimizer):
 
         self.parameters = np.zeros((X.shape[1], 1))
         for _ in range(self.iterations):
-            self.parameters = self.parameters - self.learning_rate * self.gradient(
-                X, y, self.parameters, *args, **kwargs
-            )
+            self.parameters = self.parameters - (
+                self.learning_rate / y.shape[0]
+            ) * self.gradient(X, y, self.parameters, *args, **kwargs)
+
+            if self.is_history_enabled:
+                self.history.append(self.function(X, y, self.parameters))
+
+        return self.parameters
+
+
+class SGD(AbstractOptimizer):
+    """Stochastic gradient descent."""
+
+    def __init__(self, *args, learning_rate: float = 0.01, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.learning_rate = learning_rate
+
+        self.parameters = None
+
+    def __call__(self, X, y, *args, **kwargs):
+        if not (self.function and self.gradient):
+            raise ValueError("you must build the optimizer before calling it")
+
+        X, y = shuffle_dataset(X, y)
+
+        self.parameters = np.zeros((X.shape[1], 1))
+        for _ in range(self.iterations):
+            for X_i, y_i in zip(X, y):
+                self.parameters = self.parameters - self.learning_rate * self.gradient(
+                    X_i[None, :], y_i[None, :], self.parameters, *args, **kwargs
+                )
 
             if self.is_history_enabled:
                 self.history.append(self.function(X, y, self.parameters))

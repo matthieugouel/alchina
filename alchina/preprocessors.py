@@ -1,4 +1,4 @@
-"""Data preprocessors."""
+"""Preprocessors."""
 
 import numpy as np
 

@@ -1,6 +1,8 @@
-"""Diagnose the performances of an algorithm."""
+"""Diagnosis tools."""
 
 import numpy as np
+
+from .utils import shuffle_dataset
 
 
 def r2_score(y_pred, y_true):
@@ -20,9 +22,7 @@ def split_dataset(X, y, train: float = 0.7, shuffle: bool = True):
         raise ValueError("train proportion must be between 0 and 1")
 
     if shuffle:
-        indices = np.random.permutation(X.shape[0])
-        X = X[indices[:, np.newaxis], np.arange(X.shape[1])]
-        y = y[indices[:, np.newaxis], np.arange(y.shape[1])]
+        X, y = shuffle_dataset(X, y)
 
     index = round(train * X.shape[0])
 
