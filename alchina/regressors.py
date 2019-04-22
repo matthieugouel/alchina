@@ -77,12 +77,16 @@ class LinearRegressor(AbstractRegressor):
         self.optimizer.parameters = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(y)
 
 
-class RidgeRegressor(LinearRegressor):
+class RidgeRegressor(AbstractRegressor):
     """Ridge regressor."""
 
     def __init__(self, *args, regularization: float = 1, **kwargs):
         super().__init__(*args, **kwargs)
         self.regularization = regularization
+
+    def hypothesis(self, X, theta):
+        """Linear hypothesis."""
+        return np.dot(X, theta)
 
     def cost(self, X, y, theta):
         """Regularized cost function."""
