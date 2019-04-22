@@ -5,9 +5,23 @@ import numpy as np
 from typing import Optional
 
 
-class Standardization(object):
-    """Rescale the data.
+class Normalization(object):
+    """Rescale the data via a normalization.
 
+    Produce:
+    - Bring all values into the range [0, 1]
+    """
+
+    def __call__(self, X, axis: int = 0):
+        min_x = np.amin(X, axis=axis)
+        max_x = np.amax(X, axis=axis)
+        return (X - min_x) / (max_x - min_x)
+
+
+class Standardization(object):
+    """Rescale the data via a standardization
+
+    Produce:
     - mean(Xstandardized) = 0
     - std(Xstandardized) = 1
     """

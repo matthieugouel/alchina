@@ -3,7 +3,17 @@
 import numpy as np
 import pytest
 
-from alchina.preprocessors import Standardization
+from alchina.preprocessors import Normalization, Standardization
+
+
+def test_normalization():
+    """Test of `Normalization` class."""
+    normalize = Normalization()
+
+    X = np.array([1, 10, 100, 5, 0.01])
+    X_norm = normalize(X)
+
+    assert np.all((X_norm >= 0) & (X_norm <= 1))
 
 
 def test_standardization():
