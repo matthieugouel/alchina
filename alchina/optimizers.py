@@ -62,7 +62,8 @@ class SGD(AbstractOptimizer):
     def __init__(
         self, *args, learning_rate: float = 0.01, iterations: int = 1, **kwargs
     ):
-        super().__init__(*args, iterations=iterations, **kwargs)
+        kwargs.update({"iterations": iterations})
+        super().__init__(*args, **kwargs)
         self.learning_rate = learning_rate
 
         self.parameters = None
@@ -97,7 +98,8 @@ class MBGD(AbstractOptimizer):
         iterations: int = 10,
         **kwargs,
     ):
-        super().__init__(*args, iterations=iterations, **kwargs)
+        kwargs.update({"iterations": iterations})
+        super().__init__(*args, **kwargs)
         self.learning_rate = learning_rate
         self.batch_size = batch_size
 
