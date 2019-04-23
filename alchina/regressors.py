@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from .diagnosis import r2_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
+from .utils import check_dataset_consistancy
 
 
 class AbstractRegressor(ABC):
@@ -37,6 +38,9 @@ class AbstractRegressor(ABC):
 
     def fit(self, X, y):
         """Fit the model."""
+        if not check_dataset_consistancy(X, y):
+            raise ValueError("the features set and target set must have as many rows")
+
         if self.standardize is not None:
             X = self.standardize(X)
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)

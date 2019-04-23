@@ -3,6 +3,11 @@
 import numpy as np
 
 
+def check_dataset_consistancy(X, y):
+    """Check the length consistency between the features set and the target set."""
+    return X.shape[0] == y.shape[0]
+
+
 def shuffle_dataset(X, y):
     """Randomly shuffle the dataset."""
     indices = np.random.permutation(X.shape[0])
