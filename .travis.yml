@@ -1,0 +1,26 @@
+language: python
+dist: xenial
+python:
+  - "3.7"
+
+stages:
+  - lint
+  - type
+  - tests
+
+install:
+  - pip install poetry
+  - poetry install
+
+jobs:
+  include:
+    - stage: Quality
+      name: lint
+      script: make lint
+    - name: type
+      script: make type
+    - name: tests
+      script: make tests
+
+after_success:
+  poetry run coveralls
