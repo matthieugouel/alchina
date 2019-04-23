@@ -13,3 +13,7 @@ test:
 
 format:
 	@$(ENVRUN) black -l $(LINE_LENGTH) -S $(PACKAGE) tests
+
+quality: format lint type test
+
+.PHONY: lint type test format quality
