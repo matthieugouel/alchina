@@ -27,7 +27,7 @@ y = y.values.reshape(y.shape[0], 1)
 
 # Train the model
 lr = LinearRegressor(
-    optimizer=MBGD(learning_rate=0.05, iterations=70), history=True, standardize=True
+    optimizer=MBGD(learning_rate=0.05, iterations=70, history=True), standardize=True
 )
 lr.fit(X, y)
 
