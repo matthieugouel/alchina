@@ -28,7 +28,7 @@ standardize = Standardization()
 X = standardize(X)
 
 # Train the model
-lc = LinearClassifier(optimizer=SGD(iterations=15, history=True), standardize=True)
+lc = LinearClassifier(optimizer=SGD(iterations=15, history=True), standardize=False)
 lc.fit(X, y)
 
 # Plot the results

@@ -2,10 +2,24 @@
 
 import numpy as np
 
-from alchina.regressors import AbstractRegressor
+from abc import ABC
+
+from .regressors import AbstractRegressor
 
 
-class LinearClassifier(AbstractRegressor):
+class AbstractClassifier(AbstractRegressor, ABC):
+    """Abstract class for classifiers algorithms."""
+
+    def predict_probability(self, X):
+        """Predict with the actual probability."""
+        return super().predict(X)
+
+    def predict(self, X):
+        """Predict a target given features."""
+        return np.around(self.predict_probability(X)).astype("int")
+
+
+class LinearClassifier(AbstractClassifier):
     """Linear classifier (logistic regressor)."""
 
     def sigmoid(self, z):
