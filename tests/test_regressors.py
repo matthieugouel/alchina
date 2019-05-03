@@ -47,9 +47,7 @@ def test_linear_regressor_normal():
 
 def test_linear_regressor_history_enabled():
     """Test of `LinearRegressor` when history enabled."""
-    lr = LinearRegressor(
-        learning_rate=0.1, iterations=1, history=True, standardize=False
-    )
+    lr = LinearRegressor(learning_rate=0.1, iterations=1, history=True)
 
     assert lr.history == []
 
@@ -63,9 +61,7 @@ def test_linear_regressor_history_enabled():
 
 def test_linear_regressor_history_disabled():
     """Test of `LinearRegressor` when history disabled."""
-    lr = LinearRegressor(
-        learning_rate=0.1, iterations=1, history=False, standardize=False
-    )
+    lr = LinearRegressor(learning_rate=0.1, iterations=1, history=False)
 
     assert lr.history is None
 
@@ -79,7 +75,7 @@ def test_linear_regressor_history_disabled():
 
 def test_linear_regressor_dataset_inconsistancy():
     """Test of `LinearRegressor` with dataset inconsistancy."""
-    lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=False)
+    lr = LinearRegressor(learning_rate=0.1, iterations=1)
 
     X = np.array([[1], [1]])
     y = np.array([[1]])
@@ -129,9 +125,7 @@ def test_ridge_regressor_normal():
 
 def test_ridge_regressor_history_enabled():
     """Test of `RidgeRegressor` when history enabled."""
-    rr = RidgeRegressor(
-        learning_rate=0.1, iterations=1, history=True, standardize=False
-    )
+    rr = RidgeRegressor(learning_rate=0.1, iterations=1, history=True)
 
     assert rr.history == []
 
@@ -145,9 +139,7 @@ def test_ridge_regressor_history_enabled():
 
 def test_ridge_regressor_history_disabled():
     """Test of `RidgeRegressor` when history disabled."""
-    rr = RidgeRegressor(
-        learning_rate=0.1, iterations=1, history=False, standardize=False
-    )
+    rr = RidgeRegressor(learning_rate=0.1, iterations=1, history=False)
 
     assert rr.history is None
 
@@ -161,7 +153,7 @@ def test_ridge_regressor_history_disabled():
 
 def test_ridge_regressor_dataset_inconsistancy():
     """Test of `RidgeRegressor` with dataset inconsistancy."""
-    rr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
+    rr = RidgeRegressor(learning_rate=0.1, iterations=1)
 
     X = np.array([[1], [1]])
     y = np.array([[1]])
