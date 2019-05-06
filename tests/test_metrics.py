@@ -3,7 +3,32 @@
 import numpy as np
 import pytest
 
-from alchina.metrics import r2_score
+from alchina.metrics import accuracy_score, r2_score
+
+
+def test_accuracy_score():
+    """Test of `accuracy_score` function."""
+    y_pred = np.array([0, 2, 1, 3])
+    y_true = np.array([0, 1, 2, 3])
+
+    assert accuracy_score(y_pred, y_true) == 0.5
+
+
+def test_accuracy_score_count():
+    """Test of `accuracy_score` function with count option."""
+    y_pred = np.array([0, 2, 1, 3])
+    y_true = np.array([0, 1, 2, 3])
+
+    assert accuracy_score(y_pred, y_true, count=True) == 2
+
+
+def test_accuracy_score_inconsistency():
+    """Test of `accuracy_score` function."""
+    y_pred = np.array([3, -0.5, 2, 7])
+    y_true = np.array([2.5, 0.0, 2])
+
+    with pytest.raises(ValueError):
+        accuracy_score(y_pred, y_true)
 
 
 def test_r2_score_row():
