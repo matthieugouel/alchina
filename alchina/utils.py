@@ -3,7 +3,7 @@
 import numpy as np
 
 
-def check_dataset_consistancy(X, y):
+def check_dataset_consistency(X, y):
     """Check the length consistency between the features set and the target set."""
     return X.shape[0] == y.shape[0]
 

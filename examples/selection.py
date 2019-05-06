@@ -1,9 +1,9 @@
-"""Example of algorithm diagnosis."""
+"""Example of algorithm selection."""
 
 import pandas as pd
 
-from alchina.diagnosis import split_dataset
 from alchina.regressors import LinearRegressor
+from alchina.selection import split_dataset
 
 from sklearn import datasets
 from sklearn.linear_model import LinearRegression

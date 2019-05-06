@@ -5,7 +5,7 @@ import numpy as np
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from .utils import check_dataset_consistancy, shuffle_dataset
+from .utils import check_dataset_consistency, shuffle_dataset
 
 
 class AbstractOptimizer(ABC):
@@ -42,7 +42,7 @@ class GradientDescent(AbstractOptimizer):
         if not (self.function and self.gradient):
             raise ValueError("you must build the optimizer before calling it")
 
-        if not check_dataset_consistancy(X, y):
+        if not check_dataset_consistency(X, y):
             raise ValueError("the features set and target set must have as many rows")
 
         m = y.shape[0]
@@ -75,7 +75,7 @@ class SGD(AbstractOptimizer):
         if not (self.function and self.gradient):
             raise ValueError("you must build the optimizer before calling it")
 
-        if not check_dataset_consistancy(X, y):
+        if not check_dataset_consistency(X, y):
             raise ValueError("the features set and target set must have as many rows")
 
         X, y = shuffle_dataset(X, y)
@@ -115,7 +115,7 @@ class MBGD(AbstractOptimizer):
         if not (self.function and self.gradient):
             raise ValueError("you must build the optimizer before calling it")
 
-        if not check_dataset_consistancy(X, y):
+        if not check_dataset_consistency(X, y):
             raise ValueError("the features set and target set must have as many rows")
 
         X, y = shuffle_dataset(X, y)
