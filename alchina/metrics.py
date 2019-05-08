@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from typing import Optional
+
 from .utils import check_dataset_consistency
 from .utils import target_reshape, target_labels
 
@@ -11,7 +13,7 @@ def confusion_matrix(y_pred, y_true):
     y_pred = target_reshape(y_pred)
     y_true = target_reshape(y_true)
 
-    label_number = len(np.unique(y_true))
+    label_number = len(target_labels(y_true))
     label_number = label_number if label_number >= 2 else 2
 
     cm = np.zeros((label_number, label_number), dtype=int)
@@ -40,7 +42,7 @@ def accuracy_score(y_pred, y_true, count: bool = False):
     return np.mean(accuracies)
 
 
-def precision_score(y_pred, y_true, average=None):
+def precision_score(y_pred, y_true, average: Optional[str] = None):
     """Precision score.
 
     In the case of multiclass labels, an average strategy can be set:
@@ -74,7 +76,7 @@ def precision_score(y_pred, y_true, average=None):
         raise ValueError(f"average {average} not supported")
 
 
-def recall_score(y_pred, y_true, average=None):
+def recall_score(y_pred, y_true, average: Optional[str] = None):
     """Recall score.
 
     In the case of multiclass labels, an average strategy can be set:
@@ -108,7 +110,7 @@ def recall_score(y_pred, y_true, average=None):
         raise ValueError(f"average {average} not supported")
 
 
-def fbeta_score(y_pred, y_true, beta, average=None):
+def fbeta_score(y_pred, y_true, beta, average: Optional[str] = None):
     """F-beta score.
 
     In the case of multiclass labels, an average strategy can be set:
@@ -143,7 +145,7 @@ def fbeta_score(y_pred, y_true, beta, average=None):
         raise ValueError(f"average {average} not supported")
 
 
-def f1_score(y_pred, y_true, average=None):
+def f1_score(y_pred, y_true, average: Optional[str] = None):
     """F1 score.
 
     In the case of multiclass labels, an average strategy can be set:

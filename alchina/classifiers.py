@@ -21,6 +21,11 @@ class AbstractClassifier(ABC):
         self.labels = None
 
     @abstractmethod
+    def hypothesis(self, X, theta):
+        """Hypothesis."""
+        pass  # pragma: no cover
+
+    @abstractmethod
     def cost(self, X, y, theta):
         """Cost function."""
         pass  # pragma: no cover

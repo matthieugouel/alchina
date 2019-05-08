@@ -19,6 +19,11 @@ class AbstractRegressor(ABC):
         self.optimizer.build(self.cost, self.gradient)
 
     @abstractmethod
+    def hypothesis(self, X, theta):
+        """Hypothesis."""
+        pass  # pragma: no cover
+
+    @abstractmethod
     def cost(self, X, y, theta):
         """Cost function."""
         pass  # pragma: no cover
