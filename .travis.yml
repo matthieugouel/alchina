@@ -21,7 +21,7 @@ jobs:
     - name: type
       script: make type
     - name: tests
-      script: make tests
+      script: make test
     - stage: Publish
       script: skip
       before_deploy:
