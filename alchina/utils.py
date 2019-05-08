@@ -14,3 +14,13 @@ def shuffle_dataset(X, y):
     X = X[indices[:, np.newaxis], np.arange(X.shape[1])]
     y = y[indices[:, np.newaxis], np.arange(y.shape[1])]
     return X, y
+
+
+def target_reshape(y):
+    """Reshape the target to be a 1-D array."""
+    return y.reshape(-1)
+
+
+def target_labels(y):
+    """Get the target labels."""
+    return np.unique(y)

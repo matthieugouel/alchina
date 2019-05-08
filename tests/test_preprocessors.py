@@ -6,6 +6,9 @@ import pytest
 from alchina.preprocessors import Normalization, Standardization
 
 
+# --- Normalization ---
+
+
 def test_normalization():
     """Test of `Normalization` class."""
     normalize = Normalization()
@@ -14,6 +17,9 @@ def test_normalization():
     X_norm = normalize(X)
 
     assert np.all((X_norm >= 0) & (X_norm <= 1))
+
+
+# --- Standardization ---
 
 
 def test_standardization():
