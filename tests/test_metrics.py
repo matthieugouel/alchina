@@ -54,12 +54,12 @@ def test_accuracy_score():
     assert accuracy_score(y_pred, y_true) == 0.5
 
 
-def test_accuracy_score_count():
+def test_accuracy_score_no_normalization():
     """Test of `accuracy_score` function with count option."""
     y_pred = np.array([0, 2, 1, 3])
     y_true = np.array([0, 1, 2, 3])
 
-    assert accuracy_score(y_pred, y_true, count=True) == 2
+    assert accuracy_score(y_pred, y_true, normalize=False) == 2
 
 
 def test_accuracy_score_inconsistency():

@@ -4,7 +4,7 @@ import numpy as np
 
 from abc import ABC, abstractmethod
 
-from .metrics import r2_score
+from .metrics import accuracy_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
 from .utils import check_dataset_consistency
@@ -73,7 +73,7 @@ class AbstractClassifier(ABC):
 
     def score(self, X, y):
         """Score of the model."""
-        return r2_score(self.predict(X), y)
+        return accuracy_score(self.predict(X), y)
 
 
 class LinearClassifier(AbstractClassifier):

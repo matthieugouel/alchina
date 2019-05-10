@@ -24,11 +24,12 @@ def confusion_matrix(y_pred, y_true):
     return cm
 
 
-def accuracy_score(y_pred, y_true, count: bool = False):
+def accuracy_score(y_pred, y_true, normalize: bool = True):
     """Accuracy score.
 
-    If `count` option is True, then it returns the sum of all accurate predictions.
-    Else, it returns the mean of all accurate predictions.
+    **normalize**
+    If set to True, it returns the fraction of correct predictions.
+    Else, it returns the sum of correct predictions.
     """
     if not check_dataset_consistency(y_pred, y_true):
         raise ValueError("input must have as many rows")
@@ -37,9 +38,9 @@ def accuracy_score(y_pred, y_true, count: bool = False):
 
     accuracies = np.diag(cm).astype(float)
 
-    if count:
+    if not normalize:
         return np.sum(accuracies)
-    return np.mean(accuracies)
+    return np.sum(accuracies) / len(target_reshape(y_true))
 
 
 def precision_score(y_pred, y_true, average: Optional[str] = None):
