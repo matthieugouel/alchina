@@ -17,7 +17,7 @@ from alchina.metrics import (
 # --- Confusion matrix ---
 
 
-def test_onfusion_matrix_no_prediction():
+def test_confusion_matrix_no_prediction():
     """Test of `confusion_matrix` with no prediction."""
     y_pred = np.array([0])
     y_true = np.array([1])
@@ -43,7 +43,34 @@ def test_confusion_matrix_multiclass_labels():
     )
 
 
+def test_confusion_matrix_non_int_labels():
+    """Test of `confusion_matrix` with non int labels."""
+    y_true = np.array(["a", "b", "c", "b"])
+    y_pred = np.array(["a", "b", "c", "a"])
+
+    assert np.array_equal(
+        confusion_matrix(y_pred, y_true), np.array([[1, 0, 0], [1, 1, 0], [0, 0, 1]])
+    )
+
+
+def test_confusion_matrix_inconsistency():
+    """Test of `confusion_matrix` function."""
+    y_pred = np.array([0, 1])
+    y_true = np.array([1])
+
+    with pytest.raises(ValueError):
+        confusion_matrix(y_pred, y_true)
+
+
 # --- Accuracy score ---
+
+
+def test_accuracy_score_no_prediction():
+    """Test of `accuracy_score` with no prediction."""
+    y_pred = np.array([0])
+    y_true = np.array([1])
+
+    assert accuracy_score(y_pred, y_true) == 0
 
 
 def test_accuracy_score():

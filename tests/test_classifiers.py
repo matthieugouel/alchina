@@ -30,10 +30,7 @@ def test_linear_classifier_standardized():
 
     lc.fit(X, y)
 
-    print(lc.predict(X[0].reshape(1, 1)))
-    print(lc.predict(X[1].reshape(1, 1)))
-
-    # assert lc.score(X, y) == 1
+    assert lc.score(X, y) == 1
 
 
 def test_linear_classifier_history_enabled():

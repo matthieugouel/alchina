@@ -5,18 +5,27 @@ import numpy as np
 from typing import Optional
 
 from .utils import check_dataset_consistency
-from .utils import target_reshape, target_labels
+from .utils import (
+    target_reshape,
+    target_labels,
+    target_label_count,
+    target_label_to_index,
+)
 
 
 def confusion_matrix(y_pred, y_true):
     """Confusion matrix."""
-    y_pred = target_reshape(y_pred)
-    y_true = target_reshape(y_true)
+    if not check_dataset_consistency(y_pred, y_true):
+        raise ValueError("input must have as many rows")
 
-    label_number = len(target_labels(y_true))
-    label_number = label_number if label_number >= 2 else 2
+    labels = target_labels(y_pred, y_true)
 
-    cm = np.zeros((label_number, label_number), dtype=int)
+    y_pred = target_label_to_index(target_reshape(y_pred), labels=labels)
+    y_true = target_label_to_index(target_reshape(y_true), labels=labels)
+
+    label_count = len(labels)
+
+    cm = np.zeros((label_count, label_count), dtype=int)
 
     for i in range(y_true.size):
         cm[y_true[i]][y_pred[i]] += 1
@@ -66,8 +75,7 @@ def precision_score(y_pred, y_true, average: Optional[str] = None):
         numerator, denominator, out=np.zeros_like(numerator), where=denominator != 0
     )
 
-    label_number = len(target_labels(y_true))
-    if label_number <= 2:
+    if target_label_count(y_true) <= 2:
         return np.sum(precisions)
     elif not average:
         return precisions
@@ -100,8 +108,7 @@ def recall_score(y_pred, y_true, average: Optional[str] = None):
         numerator, denominator, out=np.zeros_like(numerator), where=denominator != 0
     )
 
-    label_number = len(target_labels(y_true))
-    if label_number <= 2:
+    if target_label_count(y_true) <= 2:
         return np.sum(recalls)
     elif not average:
         return recalls
@@ -135,8 +142,7 @@ def fbeta_score(y_pred, y_true, beta, average: Optional[str] = None):
         numerator, denominator, out=np.zeros_like(numerator), where=denominator != 0
     )
 
-    label_number = len(target_labels(y_true))
-    if label_number <= 2:
+    if target_label_count(y_true) <= 2:
         return np.sum(f_beta_scores)
     elif not average:
         return f_beta_scores
