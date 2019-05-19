@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from .metrics import accuracy_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
-from .utils import check_dataset_consistency
+from .utils import check_dataset_consistency, features_reshape
 
 
 class AbstractClassifier(ABC):
@@ -41,6 +41,7 @@ class AbstractClassifier(ABC):
 
     def fit(self, X, y):
         """Fit the model."""
+        X = features_reshape(X)
         if not check_dataset_consistency(X, y):
             raise ValueError("the features set and target set must have as many rows")
 
@@ -59,6 +60,7 @@ class AbstractClassifier(ABC):
 
     def predict_probability(self, X):
         """Predict the probability of a target given features."""
+        X = features_reshape(X)
         if self.standardize is not None:
             X = self.standardize(X)
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)

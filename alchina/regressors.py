@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from .metrics import r2_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
-from .utils import check_dataset_consistency
+from .utils import check_dataset_consistency, features_reshape
 
 
 class AbstractRegressor(ABC):
@@ -43,6 +43,7 @@ class AbstractRegressor(ABC):
 
     def fit(self, X, y):
         """Fit the model."""
+        X = features_reshape(X)
         if not check_dataset_consistency(X, y):
             raise ValueError("the features set and target set must have as many rows")
 
@@ -53,6 +54,7 @@ class AbstractRegressor(ABC):
 
     def predict(self, X):
         """Predict a target given features."""
+        X = features_reshape(X)
         if self.standardize is not None:
             X = self.standardize(X)
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
@@ -82,6 +84,7 @@ class LinearRegressor(AbstractRegressor):
 
     def normal(self, X, y):
         """Use normal equation to compute the parameters."""
+        X = features_reshape(X)
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
         self.optimizer.parameters = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(y)
 
@@ -112,6 +115,7 @@ class RidgeRegressor(AbstractRegressor):
 
     def normal(self, X, y):
         """Use normal equation regularized to compute the parameters."""
+        X = features_reshape(X)
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
         L = np.identity(X.shape[0])
         L[0, 0] = 0

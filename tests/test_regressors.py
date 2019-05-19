@@ -13,8 +13,8 @@ def test_linear_regressor():
     """Test of `LinearRegressor` class."""
     lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=False)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     lr.fit(X, y)
 
@@ -25,8 +25,8 @@ def test_linear_regressor_standardized():
     """Test of `LinearRegressor` class with standardization."""
     lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=True)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     lr.fit(X, y)
 
@@ -37,8 +37,8 @@ def test_linear_regressor_normal():
     """Test of `normal` method of `LinearRegressor` class."""
     lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=False)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     lr.normal(X, y)
 
@@ -51,8 +51,8 @@ def test_linear_regressor_history_enabled():
 
     assert lr.history == []
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     lr.fit(X, y)
 
@@ -65,8 +65,8 @@ def test_linear_regressor_history_disabled():
 
     assert lr.history is None
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     lr.fit(X, y)
 
@@ -91,8 +91,8 @@ def test_ridge_regressor():
     """Test of `RidgeRegressor` class."""
     rr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     rr.fit(X, y)
 
@@ -103,8 +103,8 @@ def test_ridge_regressor_standardized():
     """Test of `RidgeRegressor` class with standardization."""
     rr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=True)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     rr.fit(X, y)
 
@@ -115,8 +115,8 @@ def test_ridge_regressor_normal():
     """Test of `normal` method of `RidgeRegressor` class."""
     rr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     rr.normal(X, y)
 
@@ -129,8 +129,8 @@ def test_ridge_regressor_history_enabled():
 
     assert rr.history == []
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     rr.fit(X, y)
 
@@ -143,8 +143,8 @@ def test_ridge_regressor_history_disabled():
 
     assert rr.history is None
 
-    X = np.array([[1]])
-    y = np.array([[1]])
+    X = np.array([1])
+    y = np.array([1])
 
     rr.fit(X, y)
 

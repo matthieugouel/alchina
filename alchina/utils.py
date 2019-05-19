@@ -22,6 +22,16 @@ def shuffle_dataset(X: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarra
     return X, y
 
 
+# --- Features ---
+
+
+def features_reshape(X: np.ndarray) -> np.ndarray:
+    """Reshape features matrix to be a 2-D array."""
+    if X.ndim == 1:
+        return X.reshape(1, -1)
+    return X
+
+
 # --- Target ---
 
 

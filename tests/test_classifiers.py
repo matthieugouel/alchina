@@ -33,6 +33,18 @@ def test_linear_classifier_standardized():
     assert lc.score(X, y) == 1
 
 
+def test_linear_classifier_predict():
+    """Test of `LinearClassifier` class with a prediction."""
+    lc = LinearClassifier(learning_rate=0.1, iterations=1, standardize=True)
+
+    X = np.array([[0], [1]])
+    y = np.array([[0], [1]])
+
+    lc.fit(X, y)
+
+    assert np.equal(lc.predict(np.array([0])), np.array([0]))
+
+
 def test_linear_classifier_history_enabled():
     """Test of `LinearClassifier` when history enabled."""
     lc = LinearClassifier(learning_rate=0.1, iterations=1, history=True)
@@ -122,16 +134,16 @@ def test_ridge_classifier_standardized():
     assert rc.score(X, y) == 1
 
 
-def test_ridge_classifier_multiclass():
-    """Test of `LinearClassifier` with no multiclass."""
-    rc = RidgeClassifier(learning_rate=0.1, iterations=2, history=True)
+def test_ridge_classifier_predict():
+    """Test of `LinearClassifier` class with a prediction."""
+    lc = RidgeClassifier(learning_rate=0.1, iterations=1, standardize=True)
 
-    X = np.array([[0], [1], [2]])
-    y = np.array([[0], [1], [2]])
+    X = np.array([[0], [1]])
+    y = np.array([[0], [1]])
 
-    rc.fit(X, y)
+    lc.fit(X, y)
 
-    assert rc.score(X, y) == 1
+    assert np.equal(lc.predict(np.array([0])), np.array([0]))
 
 
 def test_ridge_classifier_history_enabled():
@@ -160,6 +172,18 @@ def test_ridge_classifier_history_disabled():
     rc.fit(X, y)
 
     assert rc.history is None
+
+
+def test_ridge_classifier_multiclass():
+    """Test of `LinearClassifier` with no multiclass."""
+    rc = RidgeClassifier(learning_rate=0.1, iterations=2, history=True)
+
+    X = np.array([[0], [1], [2]])
+    y = np.array([[0], [1], [2]])
+
+    rc.fit(X, y)
+
+    assert rc.score(X, y) == 1
 
 
 def test_ridge_classifier_dataset_inconsistancy():
