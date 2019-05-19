@@ -6,3 +6,40 @@
 [![license](https://img.shields.io/github/license/matthieugouel/gibica.svg)](https://github.com/matthieugouel/gibica/blob/master/LICENSE)
 
 Alchina is a Machine Learning framework.
+
+## Capabilities
+
+**Regressors**
+
+- Linear regression
+- Ridge regression
+
+**Classifiers**
+
+- Linear classifier
+- Ridge classifier
+
+**Optimizers**
+
+- Gradient descent
+- Stochastic gradient descent
+- Mini-batch gradient descent
+
+**Preprocessors**
+
+- Min-max normalization
+- Standardization
+
+**Metrics**
+
+- R2 score
+- Confusion matrix
+- Accuracy score
+- Precision score
+- Recall score
+- F-Beta score
+- F-1 score
+
+**Model selection**
+
+- Split dataset
