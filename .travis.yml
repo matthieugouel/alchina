@@ -20,11 +20,12 @@ script: make test
 jobs:
   include:
     - stage: quality
-      name: lint
+      name: Lint
       script: make lint
-    - name: type
+    - name: Type
       script: make type
     - stage: publish
+      name: Publish
       script: skip
       before_deploy:
         - poetry config http-basic.pypi $PYPI_USERNAME $PYPI_PASSWORD
