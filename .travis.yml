@@ -2,10 +2,12 @@ language: python
 dist: xenial
 python:
   - "3.7"
+  - "3.6"
 
 stages:
-  - Quality
-  - Publish
+  - quality
+  - test
+  - publish
 
 before_install:
   - pip install poetry
@@ -13,16 +15,16 @@ before_install:
 install:
   - poetry install
 
+script: make test
+
 jobs:
   include:
-    - stage: Quality
+    - stage: quality
       name: lint
       script: make lint
     - name: type
       script: make type
-    - name: tests
-      script: make test
-    - stage: Publish
+    - stage: publish
       script: skip
       before_deploy:
         - poetry config http-basic.pypi $PYPI_USERNAME $PYPI_PASSWORD
