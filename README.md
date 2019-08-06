@@ -20,6 +20,10 @@ Alchina is a Machine Learning framework.
 - Linear classifier
 - Ridge classifier
 
+**Clusters**
+
+- K-Means clustering
+
 **Optimizers**
 
 - Gradient descent
