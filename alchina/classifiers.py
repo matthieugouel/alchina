@@ -50,10 +50,10 @@ class AbstractClassifier(ABC):
         X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
 
         self.labels = np.unique(y)
-        labels_number = np.size(self.labels)
-        if labels_number < 2:
+        n_labels = np.size(self.labels)
+        if n_labels < 2:
             raise ValueError("target must have at least two different classes")
-        elif labels_number == 2:
+        elif n_labels == 2:
             self.parameters = self.optimizer(X, y)
         else:
             self.parameters = self.optimizer(X, (y == self.labels).astype(int))
