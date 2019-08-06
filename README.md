@@ -12,8 +12,8 @@ Alchina is a Machine Learning framework.
 
 **Regressors**
 
-- Linear regression
-- Ridge regression
+- Linear regressor
+- Ridge regressor
 
 **Classifiers**
 
