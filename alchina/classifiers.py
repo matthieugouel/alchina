@@ -4,6 +4,7 @@ import numpy as np
 
 from abc import ABC, abstractmethod
 
+from .exceptions import InvalidInput, NotFitted
 from .metrics import accuracy_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
@@ -17,7 +18,7 @@ class AbstractClassifier(ABC):
         self.standardize = Standardization() if standardize else None
         self.optimizer = optimizer if optimizer else GradientDescent(*args, **kwargs)
         self.optimizer.build(self.cost, self.gradient)
-        self.parameters = None
+
         self.labels = None
 
     @abstractmethod
@@ -36,6 +37,10 @@ class AbstractClassifier(ABC):
         pass  # pragma: no cover
 
     @property
+    def parameters(self):
+        return self.optimizer.parameters
+
+    @property
     def history(self):
         return self.optimizer.history
 
@@ -43,7 +48,7 @@ class AbstractClassifier(ABC):
         """Fit the model."""
         X = features_reshape(X)
         if not check_dataset_consistency(X, y):
-            raise ValueError("the features set and target set must have as many rows")
+            raise InvalidInput("the features set and target set must have as many rows")
 
         if self.standardize is not None:
             X = self.standardize(X)
@@ -52,14 +57,17 @@ class AbstractClassifier(ABC):
         self.labels = np.unique(y)
         n_labels = np.size(self.labels)
         if n_labels < 2:
-            raise ValueError("target must have at least two different classes")
+            raise InvalidInput("target must have at least two different classes")
         elif n_labels == 2:
-            self.parameters = self.optimizer(X, y)
+            self.optimizer(X, y)
         else:
-            self.parameters = self.optimizer(X, (y == self.labels).astype(int))
+            self.optimizer(X, (y == self.labels).astype(int))
 
     def predict_probability(self, X):
         """Predict the probability of a target given features."""
+        if self.parameters is None or self.labels is None:
+            raise NotFitted("the model must be fitted before usage")
+
         X = features_reshape(X)
         if self.standardize is not None:
             X = self.standardize(X)
@@ -75,6 +83,8 @@ class AbstractClassifier(ABC):
 
     def score(self, X, y):
         """Score of the model."""
+        if self.parameters is None or self.labels is None:
+            raise NotFitted("the model must be fitted before usage")
         return accuracy_score(self.predict(X), y)
 
 

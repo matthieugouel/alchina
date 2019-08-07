@@ -3,6 +3,7 @@
 import numpy as np
 import pytest
 
+from alchina.exceptions import InvalidInput
 from alchina.metrics import (
     confusion_matrix,
     accuracy_score,
@@ -58,7 +59,7 @@ def test_confusion_matrix_inconsistency():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         confusion_matrix(y_pred, y_true)
 
 
@@ -94,7 +95,7 @@ def test_accuracy_score_inconsistency():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         accuracy_score(y_pred, y_true)
 
 
@@ -142,7 +143,7 @@ def test_precision_score_unsupported_average():
     y_pred = np.array([0, 1, 2])
     y_true = np.array([0, 1, 2])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         precision_score(y_pred, y_true, average="foobar")
 
 
@@ -151,7 +152,7 @@ def test_precision_score_inconsistancy():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         precision_score(y_pred, y_true)
 
 
@@ -197,7 +198,7 @@ def test_recall_score_unsupported_average():
     y_pred = np.array([0, 1, 2])
     y_true = np.array([0, 1, 2])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         recall_score(y_pred, y_true, average="foobar")
 
 
@@ -206,7 +207,7 @@ def test_recall_score_inconsistancy():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         recall_score(y_pred, y_true)
 
 
@@ -254,7 +255,7 @@ def test_fbeta_score_unsupported_average():
     y_pred = np.array([0, 1, 2])
     y_true = np.array([0, 1, 2])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         fbeta_score(y_pred, y_true, 0.5, average="foobar")
 
 
@@ -263,7 +264,7 @@ def test_fbeta_score_inconsistancy():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         fbeta_score(y_pred, y_true, 2)
 
 
@@ -307,7 +308,7 @@ def test_f1_score_unsupported_average():
     y_pred = np.array([0, 1, 2])
     y_true = np.array([0, 1, 2])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         f1_score(y_pred, y_true, average="foobar")
 
 
@@ -316,7 +317,7 @@ def test_f1_score_inconsistancy():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         f1_score(y_pred, y_true)
 
 
@@ -344,5 +345,5 @@ def test_r2_score_inconsistancy():
     y_pred = np.array([0, 1])
     y_true = np.array([1])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         r2_score(y_pred, y_true)

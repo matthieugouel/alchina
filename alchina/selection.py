@@ -2,6 +2,7 @@
 
 import numpy as np
 
+from .exceptions import InvalidInput
 from .utils import shuffle_dataset
 
 
@@ -10,7 +11,7 @@ def split_dataset(
 ):
     """Split the dataset into train/test sets."""
     if train < 0 or train > 1:
-        raise ValueError("train proportion must be between 0 and 1")
+        raise InvalidInput("train proportion must be between 0 and 1")
 
     if shuffle:
         X, y = shuffle_dataset(X, y)

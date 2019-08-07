@@ -3,6 +3,7 @@
 import numpy as np
 import pytest
 
+from alchina.exceptions import InvalidInput
 from alchina.selection import split_dataset
 
 
@@ -42,5 +43,5 @@ def test_split_dataset_invalid_input():
     X = np.arange(9).reshape(3, 3)
     y = np.arange(3).reshape(3, 1)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         split_dataset(X, y, train=2)

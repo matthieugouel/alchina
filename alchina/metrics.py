@@ -4,6 +4,7 @@ import numpy as np
 
 from typing import Optional
 
+from .exceptions import InvalidInput
 from .utils import check_dataset_consistency
 from .utils import (
     target_reshape,
@@ -16,7 +17,7 @@ from .utils import (
 def confusion_matrix(y_pred, y_true):
     """Confusion matrix."""
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     labels = target_labels(y_pred, y_true)
 
@@ -41,7 +42,7 @@ def accuracy_score(y_pred, y_true, normalize: bool = True):
     Else, it returns the sum of correct predictions.
     """
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     cm = confusion_matrix(y_pred, y_true)
 
@@ -64,7 +65,7 @@ def precision_score(y_pred, y_true, average: Optional[str] = None):
     The mean of each label score is returned.
     """
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     cm = confusion_matrix(y_pred, y_true)
 
@@ -82,7 +83,7 @@ def precision_score(y_pred, y_true, average: Optional[str] = None):
     elif average == "macro":
         return np.mean(precisions)
     else:
-        raise ValueError(f"average {average} not supported")
+        raise InvalidInput(f"average {average} not supported")
 
 
 def recall_score(y_pred, y_true, average: Optional[str] = None):
@@ -97,7 +98,7 @@ def recall_score(y_pred, y_true, average: Optional[str] = None):
     The mean of each label score is returned.
     """
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     cm = confusion_matrix(y_pred, y_true)
 
@@ -115,7 +116,7 @@ def recall_score(y_pred, y_true, average: Optional[str] = None):
     elif average == "macro":
         return np.mean(recalls)
     else:
-        raise ValueError(f"average {average} not supported")
+        raise InvalidInput(f"average {average} not supported")
 
 
 def fbeta_score(y_pred, y_true, beta, average: Optional[str] = None):
@@ -130,7 +131,7 @@ def fbeta_score(y_pred, y_true, beta, average: Optional[str] = None):
     The mean of each label score is returned.
     """
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     precisions = precision_score(y_pred, y_true, average=None)
     recalls = recall_score(y_pred, y_true, average=None)
@@ -149,7 +150,7 @@ def fbeta_score(y_pred, y_true, beta, average: Optional[str] = None):
     elif average == "macro":
         return np.mean(f_beta_scores)
     else:
-        raise ValueError(f"average {average} not supported")
+        raise InvalidInput(f"average {average} not supported")
 
 
 def f1_score(y_pred, y_true, average: Optional[str] = None):
@@ -169,7 +170,7 @@ def f1_score(y_pred, y_true, average: Optional[str] = None):
 def r2_score(y_pred, y_true):
     """Coefficient of determination score."""
     if not check_dataset_consistency(y_pred, y_true):
-        raise ValueError("input must have as many rows")
+        raise InvalidInput("input must have as many rows")
 
     ss_res = np.sum(np.square(y_true - y_pred), axis=0)
     ss_total = np.sum(np.square(y_true - np.mean(y_true, axis=0)), axis=0)

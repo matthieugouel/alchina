@@ -4,6 +4,7 @@ import numpy as np
 
 from abc import ABC, abstractmethod
 
+from .exceptions import InvalidInput, NotFitted
 from .metrics import r2_score
 from .optimizers import GradientDescent
 from .preprocessors import Standardization
@@ -45,7 +46,7 @@ class AbstractRegressor(ABC):
         """Fit the model."""
         X = features_reshape(X)
         if not check_dataset_consistency(X, y):
-            raise ValueError("the features set and target set must have as many rows")
+            raise InvalidInput("the features set and target set must have as many rows")
 
         if self.standardize is not None:
             X = self.standardize(X)
@@ -54,6 +55,9 @@ class AbstractRegressor(ABC):
 
     def predict(self, X):
         """Predict a target given features."""
+        if self.parameters is None:
+            raise NotFitted("the model must be fitted before usage")
+
         X = features_reshape(X)
         if self.standardize is not None:
             X = self.standardize(X)
@@ -62,6 +66,8 @@ class AbstractRegressor(ABC):
 
     def score(self, X, y):
         """Score of the model."""
+        if self.parameters is None:
+            raise NotFitted("the model must be fitted before usage")
         return r2_score(self.predict(X), y)
 
 

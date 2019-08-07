@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from alchina.classifiers import LinearClassifier, RidgeClassifier
+from alchina.exceptions import InvalidInput, NotFitted
 
 
 # --- Linear classifier ---
@@ -92,7 +93,7 @@ def test_linear_classifier_one_class_target():
     X = np.array([[1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         lc.fit(X, y)
 
 
@@ -103,8 +104,29 @@ def test_linear_classifier_dataset_inconsistancy():
     X = np.array([[1], [1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         lc.fit(X, y)
+
+
+def test_linear_classifier_predict_not_fitted():
+    """Test of `LinearClassifier` class with prediction without fit."""
+    lc = LinearClassifier(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([[0], [1]])
+
+    with pytest.raises(NotFitted):
+        lc.predict(X)
+
+
+def test_linear_classifier_score_not_fitted():
+    """Test of `LinearClassifier` class with score calculation without fit."""
+    lc = LinearClassifier(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([[0], [1]])
+    y = np.array([[0], [1]])
+
+    with pytest.raises(NotFitted):
+        lc.score(X, y) == 1
 
 
 # --- Ridge classifier ---
@@ -193,5 +215,26 @@ def test_ridge_classifier_dataset_inconsistancy():
     X = np.array([[1], [1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         rc.fit(X, y)
+
+
+def test_ridge_classifier_predict_not_fitted():
+    """Test of `RidgeClassifier` class with prediction without fit."""
+    lc = RidgeClassifier(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([[0], [1]])
+
+    with pytest.raises(NotFitted):
+        lc.predict(X)
+
+
+def test_ridge_classifier_score_not_fitted():
+    """Test of `RidgeClassifier` class with score calculation without fit."""
+    lc = RidgeClassifier(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([[0], [1]])
+    y = np.array([[0], [1]])
+
+    with pytest.raises(NotFitted):
+        lc.score(X, y) == 1

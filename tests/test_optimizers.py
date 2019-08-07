@@ -3,6 +3,7 @@
 import pytest
 import numpy as np
 
+from alchina.exceptions import InvalidInput, NotBuilt
 from alchina.optimizers import GradientDescent, SGD, MBGD
 
 
@@ -38,7 +39,7 @@ def test_gradient_descent_no_build():
     X = np.array([[1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(NotBuilt):
         gd(X, y)
 
 
@@ -51,7 +52,7 @@ def test_gradient_descent_dataset_inconsistancy():
 
     gd.build(lambda X, y, theta: theta, lambda X, y, theta: theta)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         gd(X, y)
 
 
@@ -87,7 +88,7 @@ def test_sgd_no_build():
     X = np.array([[1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(NotBuilt):
         sgd(X, y)
 
 
@@ -100,7 +101,7 @@ def test_sgd_dataset_inconsistancy():
 
     sgd.build(lambda X, y, theta: theta, lambda X, y, theta: theta)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         sgd(X, y)
 
 
@@ -136,7 +137,7 @@ def test_mbgd_no_build():
     X = np.array([[1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(NotBuilt):
         mbgd(X, y)
 
 
@@ -149,5 +150,5 @@ def test_mbgd_dataset_inconsistancy():
 
     mbgd.build(lambda X, y, theta: theta, lambda X, y, theta: theta)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         mbgd(X, y)

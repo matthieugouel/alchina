@@ -4,6 +4,7 @@ import numpy as np
 
 from typing import Optional
 
+from .exceptions import InvalidInput, NotFitted
 from .utils import features_reshape
 
 
@@ -61,7 +62,7 @@ class PCA(object):
         if self.n_components is None:
             self.n_components = max_dimension
         elif self.n_components > max_dimension:
-            raise ValueError(f"n_components must be lesser than {max_dimension}")
+            raise InvalidInput(f"n_components must be lesser than {max_dimension}")
 
         self._covariance_matrix = np.cov(X.T)
         self._mean = np.mean(X, axis=0)
@@ -71,13 +72,21 @@ class PCA(object):
 
     def transform(self, X):
         """Transform the input."""
-        if None in (self._U_reduced, self._mean):
-            self.fit(X)
+        if self._U_reduced is None or self._mean is None:
+            raise NotFitted("the model must be fitted before usage")
 
         return (X - self._mean).dot(self._U_reduced)
 
+    def fit_transform(self, X):
+        """Fit the model and transform the input."""
+        self.fit(X)
+        return self.transform(X)
+
     def score_samples(self, X):
         """Compute the log-likelihood of all samples."""
+        if self._U_reduced is None or self._mean is None:
+            raise NotFitted("the model must be fitted before usage")
+
         X = features_reshape(X)
 
         n_features = X.shape[1]
@@ -92,5 +101,4 @@ class PCA(object):
 
     def score(self, X):
         """Compute the mean of log-likelihood of all samples."""
-        X = features_reshape(X)
         return np.mean(self.score_samples(X))

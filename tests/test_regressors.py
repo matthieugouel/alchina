@@ -3,6 +3,7 @@
 import numpy as np
 import pytest
 
+from alchina.exceptions import InvalidInput, NotFitted
 from alchina.regressors import LinearRegressor, RidgeRegressor
 
 
@@ -80,8 +81,29 @@ def test_linear_regressor_dataset_inconsistancy():
     X = np.array([[1], [1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         lr.fit(X, y)
+
+
+def test_linear_regressor_predict_not_fitted():
+    """Test of `LinearRegressor` class with prediction without fit."""
+    lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([1])
+
+    with pytest.raises(NotFitted):
+        lr.predict(X)
+
+
+def test_linear_regressor_score_not_fitted():
+    """Test of `LinearRegressor` class with score calculation without fit."""
+    lr = LinearRegressor(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([1])
+    y = np.array([1])
+
+    with pytest.raises(NotFitted):
+        lr.score(X, y)
 
 
 # --- Ridge regressor ---
@@ -158,5 +180,26 @@ def test_ridge_regressor_dataset_inconsistancy():
     X = np.array([[1], [1]])
     y = np.array([[1]])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidInput):
         rr.fit(X, y)
+
+
+def test_ridge_regressor_predict_not_fitted():
+    """Test of `RidgeRegressor` class with prediction without fit."""
+    lr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([1])
+
+    with pytest.raises(NotFitted):
+        lr.predict(X)
+
+
+def test_ridge_regressor_score_not_fitted():
+    """Test of `RidgeRegressor` class with score calculation without fit."""
+    lr = RidgeRegressor(learning_rate=0.1, iterations=1, standardize=False)
+
+    X = np.array([1])
+    y = np.array([1])
+
+    with pytest.raises(NotFitted):
+        lr.score(X, y)

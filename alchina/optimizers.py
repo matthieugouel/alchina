@@ -5,6 +5,7 @@ import numpy as np
 from abc import ABC, abstractmethod
 from typing import Optional
 
+from .exceptions import InvalidInput, NotBuilt
 from .utils import check_dataset_consistency, shuffle_dataset
 
 
@@ -16,6 +17,8 @@ class AbstractOptimizer(ABC):
 
         self.function = None
         self.gradient = None
+
+        self.parameters = None
 
         self.is_history_enabled = history
         self.history: Optional[list] = [] if history else None
@@ -36,14 +39,12 @@ class GradientDescent(AbstractOptimizer):
         super().__init__(*args, **kwargs)
         self.learning_rate = learning_rate
 
-        self.parameters = None
-
     def __call__(self, X, y, *args, **kwargs):
-        if not (self.function and self.gradient):
-            raise ValueError("you must build the optimizer before calling it")
+        if None in (self.function, self.gradient):
+            raise NotBuilt("you must build the optimizer before calling it")
 
         if not check_dataset_consistency(X, y):
-            raise ValueError("the features set and target set must have as many rows")
+            raise InvalidInput("the features set and target set must have as many rows")
 
         m = y.shape[0]
 
@@ -69,14 +70,12 @@ class SGD(AbstractOptimizer):
         super().__init__(*args, **kwargs)
         self.learning_rate = learning_rate
 
-        self.parameters = None
-
     def __call__(self, X, y, *args, **kwargs):
-        if not (self.function and self.gradient):
-            raise ValueError("you must build the optimizer before calling it")
+        if None in (self.function, self.gradient):
+            raise NotBuilt("you must build the optimizer before calling it")
 
         if not check_dataset_consistency(X, y):
-            raise ValueError("the features set and target set must have as many rows")
+            raise InvalidInput("the features set and target set must have as many rows")
 
         X, y = shuffle_dataset(X, y)
 
@@ -109,14 +108,12 @@ class MBGD(AbstractOptimizer):
         self.learning_rate = learning_rate
         self.batch_size = batch_size
 
-        self.parameters = None
-
     def __call__(self, X, y, *args, **kwargs):
-        if not (self.function and self.gradient):
-            raise ValueError("you must build the optimizer before calling it")
+        if None in (self.function, self.gradient):
+            raise NotBuilt("you must build the optimizer before calling it")
 
         if not check_dataset_consistency(X, y):
-            raise ValueError("the features set and target set must have as many rows")
+            raise InvalidInput("the features set and target set must have as many rows")
 
         X, y = shuffle_dataset(X, y)
         m = y.shape[0]

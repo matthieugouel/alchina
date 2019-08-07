@@ -5,6 +5,9 @@ import numpy as np
 from alchina.clusters import KMeans
 
 
+# --- K-Means ---
+
+
 def test_kmeans_fitting():
     """Test of `KMeans` model fitting."""
     km = KMeans(n_centroids=2)
