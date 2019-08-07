@@ -34,6 +34,7 @@ Alchina is a Machine Learning framework.
 
 - Min-max normalization
 - Standardization
+- PCA
 
 **Metrics**
 
