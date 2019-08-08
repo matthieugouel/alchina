@@ -22,7 +22,7 @@ Alchina is a Machine Learning framework.
 
 **Clusters**
 
-- K-Means clustering
+- K-Means
 
 **Optimizers**
 

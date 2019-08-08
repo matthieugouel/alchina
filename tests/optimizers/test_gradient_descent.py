@@ -1,4 +1,4 @@
-"""Optimizers tests."""
+"""Gradient Descent Optimizers tests."""
 
 import pytest
 import numpy as np

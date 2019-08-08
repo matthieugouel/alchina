@@ -1,4 +1,4 @@
-"""Regressors tests."""
+"""Linear Regressors tests."""
 
 import numpy as np
 import pytest

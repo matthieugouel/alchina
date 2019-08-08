@@ -1,15 +1,15 @@
-"""Optimizers algorithms."""
+"""Gradient Descent Optimizers algorithms."""
 
 import numpy as np
 
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from .exceptions import InvalidInput, NotBuilt
-from .utils import check_dataset_consistency, shuffle_dataset
+from alchina.exceptions import InvalidInput, NotBuilt
+from alchina.utils import check_dataset_consistency, shuffle_dataset
 
 
-class AbstractOptimizer(ABC):
+class AbstractGDOptimizer(ABC):
     """Abstract class for optimizers algorithms."""
 
     def __init__(self, iterations: int = 100, history: bool = False):
@@ -32,7 +32,7 @@ class AbstractOptimizer(ABC):
         pass  # pragma: no cover
 
 
-class GradientDescent(AbstractOptimizer):
+class GradientDescent(AbstractGDOptimizer):
     """Batch gradient descent."""
 
     def __init__(self, *args, learning_rate: float = 0.01, **kwargs):
@@ -60,7 +60,7 @@ class GradientDescent(AbstractOptimizer):
         return self.parameters
 
 
-class SGD(AbstractOptimizer):
+class SGD(AbstractGDOptimizer):
     """Stochastic gradient descent."""
 
     def __init__(
@@ -92,7 +92,7 @@ class SGD(AbstractOptimizer):
         return self.parameters
 
 
-class MBGD(AbstractOptimizer):
+class MBGD(AbstractGDOptimizer):
     """Mini-batch gradient descent."""
 
     def __init__(

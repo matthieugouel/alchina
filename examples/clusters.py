@@ -23,9 +23,6 @@ X = X.values
 kmeans = KMeans(n_centroids=2)
 kmeans.fit(X)
 
-# Display the number of model iterations
-print(f"K-Means iterations : {kmeans.iterations}")
-
 # Plot the results
 A = X[np.array(kmeans.indexes) == 0]
 B = X[np.array(kmeans.indexes) == 1]

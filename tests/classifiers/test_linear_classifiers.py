@@ -1,4 +1,4 @@
-"""Classifiers tests."""
+"""Linear Classifiers tests."""
 
 import numpy as np
 import pytest
@@ -75,7 +75,7 @@ def test_linear_classifier_history_disabled():
 
 
 def test_linear_classifier_multiclass():
-    """Test of `LinearClassifier` with no multiclass."""
+    """Test of `LinearClassifier` with multiclass."""
     lc = LinearClassifier(learning_rate=0.1, iterations=2)
 
     X = np.array([[0], [1], [2]])

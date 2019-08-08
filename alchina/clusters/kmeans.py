@@ -1,10 +1,10 @@
-"""Clusters."""
+"""K-Means."""
 
 import numpy as np
 
 
 class KMeans(object):
-    """K-means algorithm."""
+    """K-Means algorithm."""
 
     def __init__(self, n_centroids, max_iterations=300):
         self.n_centroids = n_centroids

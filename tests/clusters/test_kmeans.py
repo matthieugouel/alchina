@@ -1,4 +1,4 @@
-"""Clusters tests."""
+"""K-Means tests."""
 
 import numpy as np
 
