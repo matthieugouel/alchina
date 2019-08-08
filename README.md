@@ -50,3 +50,8 @@ Alchina is a Machine Learning framework.
 **Model selection**
 
 - Split dataset
+
+
+## Disclamer
+
+This framework is designed for educational purposes and does not focus on performance. Therefore, I would not recommend using it on a real-world application.
